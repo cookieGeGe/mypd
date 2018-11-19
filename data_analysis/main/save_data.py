@@ -51,6 +51,7 @@ class OPMysql(object):
         self.coon.close()
         self.cur.close()
 
+mysql_con = OPMysql()
 
 # if __name__ == '__main__':
 #     mysql_con = OPMysql()

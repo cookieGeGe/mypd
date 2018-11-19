@@ -18,7 +18,6 @@ def produce(c, mysocket):
 
 
 if __name__ == '__main__':
-    db = OPMysql()
 
     mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -26,3 +25,5 @@ if __name__ == '__main__':
     r_c = rec_consumer()
     mysocket.connect(address)
     t1 = Recv(mysocket,)
+    t1.start()
+    t1.join()
