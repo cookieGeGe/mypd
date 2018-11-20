@@ -14,15 +14,14 @@ class Send(Thread):
 
 
 class Recv(Thread):
-    def __init__(self, client, mysocket, consumer):
+    def __init__(self, mysocket, consumer):
         super().__init__()
-        self._client = client
         self._mysocket = mysocket
         self._consumer = consumer
 
     def run(self):
         self._consumer.send(None)
         while True:
-            data = self._mysocket.recv()
+            data = self._mysocket.recv(3271)
             if data:
                 c = self._consumer.send(data)

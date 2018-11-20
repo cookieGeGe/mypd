@@ -21,9 +21,9 @@ if __name__ == '__main__':
 
     mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    address = ('127.0.0.1', 5000)
+    address = ('192.168.1.115', 8001)
     r_c = rec_consumer()
     mysocket.connect(address)
-    t1 = Recv(mysocket,)
+    t1 = Recv(mysocket, r_c)
     t1.start()
     t1.join()
