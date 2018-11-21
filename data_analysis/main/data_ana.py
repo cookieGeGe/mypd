@@ -14,16 +14,16 @@ def produce(c, mysocket):
             c = c.send(data)
 
 
-
-
-
 if __name__ == '__main__':
-
     mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     address = ('192.168.1.115', 8001)
-    r_c = rec_consumer()
+    r_c1 = rec_consumer()
+    r_c2 = rec_consumer()
     mysocket.connect(address)
-    t1 = Recv(mysocket, r_c)
+    t1 = Recv(mysocket, r_c1)
+    # t2 = Recv(mysocket, r_c2)
     t1.start()
+    # t2.start()
     t1.join()
+    # t2.join()

@@ -1,5 +1,5 @@
-import datetime
-from threading import Thread
+import time
+from threading import Thread, current_thread
 
 
 class Send(Thread):
@@ -10,7 +10,7 @@ class Send(Thread):
 
     def run(self):
         while True:
-            print(datetime.datetime.now())
+            print(time.time())
 
 
 class Recv(Thread):
@@ -21,7 +21,15 @@ class Recv(Thread):
 
     def run(self):
         self._consumer.send(None)
+        start_time = time.time()
+        i = 0
         while True:
             data = self._mysocket.recv(3271)
             if data:
                 c = self._consumer.send(data)
+                print(current_thread().getName(), c)
+                end_time = time.time()
+                i += 1
+                if end_time - start_time >= 10:
+
+                    print(i / (end_time - start_time))

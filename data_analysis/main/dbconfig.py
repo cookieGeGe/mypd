@@ -1,5 +1,5 @@
 mysqlInfo = {
-    "host": '192.168.131.128',
+    "host": '192.168.230.128',
     "user": 'root',
     "passwd": 'admin123',
     "db": 'pdms',

@@ -34,7 +34,7 @@ class OPMysql(object):
     def op_insert(self, sql, *args):
         # print('op_insert', sql)
         insert_num = self.cur.execute(sql, *args)
-        print('mysql sucess ', insert_num)
+        # print('mysql sucess ', insert_num)
         self.coon.commit()
         return insert_num
 
@@ -43,7 +43,7 @@ class OPMysql(object):
         # print('op_select', sql)
         self.cur.execute(sql, *args)  # 执行sql
         select_res = self.cur.fetchone()  # 返回结果为字典
-        print('op_select', select_res)
+        # print('op_select', select_res)
         return select_res
 
     # 释放资源

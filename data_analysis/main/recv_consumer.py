@@ -7,6 +7,7 @@ from main.utils import time_to_datetime
 
 
 def unpack_data(data):
+    # print(data)
     if data[:4] == b'\xe0\xe9\xe0\xe9':
         pd_header = unpack('<4s2sbhibbbib', data[:21])
         if not data[6]:
@@ -45,8 +46,8 @@ def unpack_data(data):
                 Content) value 
                 (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
                 '''
-                # mysql_con.op_insert(sql1,
-                #                     [id, BoardCardNo, ChannelNo, real_time, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, pd_data])
+                mysql_con.op_insert(sql1,
+                                    [id, BoardCardNo, ChannelNo, real_time, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, pd_data])
             # mysql_con.closeall()
 
 
@@ -56,5 +57,8 @@ def rec_consumer():
         data = yield r
         if not data:
             return
-
-        unpack_data(data)
+        try:
+            unpack_data(data)
+            r = 'success'
+        except:
+            r = 'error'
