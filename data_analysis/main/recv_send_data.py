@@ -1,16 +1,22 @@
 import time
+from json import loads
 from threading import Thread, current_thread
+
+from main.redishelper import RedisHelper
 
 
 class Send(Thread):
-    def __init__(self, client, mysocket):
+    def __init__(self, mysocket):
         super().__init__()
-        self._client = client
         self._mysocket = mysocket
 
     def run(self):
+        redis_obj = RedisHelper()
+        redis_sub = redis_obj.subscribe()
         while True:
-            print(time.time())
+            msg = redis_sub.parse_response()
+            a = loads(msg[2])
+            print(a['hello'])
 
 
 class Recv(Thread):
@@ -31,5 +37,4 @@ class Recv(Thread):
                 end_time = time.time()
                 i += 1
                 if end_time - start_time >= 10:
-
                     print(i / (end_time - start_time))

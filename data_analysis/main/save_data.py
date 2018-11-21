@@ -42,7 +42,7 @@ class OPMysql(object):
     def op_select(self, sql, *args):
         # print('op_select', sql)
         self.cur.execute(sql, *args)  # 执行sql
-        select_res = self.cur.fetchone()  # 返回结果为字典
+        select_res = self.cur.fetchall()  # 返回结果为字典
         # print('op_select', select_res)
         return select_res
 

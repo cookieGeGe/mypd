@@ -2,7 +2,7 @@ import socket
 
 # 导入数据库连接池
 from main.recv_consumer import rec_consumer
-from main.recv_send_data import Recv
+from main.recv_send_data import Recv, Send
 from main.save_data import OPMysql
 
 
@@ -22,8 +22,8 @@ if __name__ == '__main__':
     r_c2 = rec_consumer()
     mysocket.connect(address)
     t1 = Recv(mysocket, r_c1)
-    # t2 = Recv(mysocket, r_c2)
-    t1.start()
-    # t2.start()
-    t1.join()
-    # t2.join()
+    t2 = Send(mysocket)
+    # t1.start()
+    t2.start()
+    # t1.join()
+    t2.join()
