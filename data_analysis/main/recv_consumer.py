@@ -52,7 +52,7 @@ def unpack_data(data, save_times):
             if PDFlag:
                 save_pd = save_times[str(BoardCardNo)][ChannelNo - 1]
                 cha_time = real_time - save_pd['last_pd_time']
-                if cha_time.days != 0 or (cha_time == 0 and cha_time.seconds > 900):
+                if cha_time.days > 0 or (cha_time.days == 0 and cha_time.seconds > 900):
                     insert_pdalert(BoardCardNo, ChannelNo, real_time, pd_data)
                     save_pd['now_times'] = 1
                     save_pd['last_pd_time'] = real_time
@@ -60,6 +60,9 @@ def unpack_data(data, save_times):
                     if save_pd['now_times'] < 9:
                         insert_pdalert(BoardCardNo, ChannelNo, real_time, pd_data)
                         save_pd['now_times'] += 1
+                    elif save_pd['now_times'] == 9:
+                        print(save_pd)
+                        print(real_time)
 
 
 def rec_consumer():
@@ -77,6 +80,7 @@ def rec_consumer():
         try:
             start_time = datetime.datetime.now()
             unpack_data(data, save_time_list)
+            # print(data)
             print(datetime.datetime.now() - start_time)
             r = 'success'
         except:
