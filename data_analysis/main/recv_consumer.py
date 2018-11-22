@@ -56,13 +56,15 @@ def unpack_data(data, save_times):
                     insert_pdalert(BoardCardNo, ChannelNo, real_time, pd_data)
                     save_pd['now_times'] = 1
                     save_pd['last_pd_time'] = real_time
+                elif cha_time.days < 0:
+                    pass
                 else:
                     if save_pd['now_times'] < 9:
                         insert_pdalert(BoardCardNo, ChannelNo, real_time, pd_data)
                         save_pd['now_times'] += 1
-                    elif save_pd['now_times'] == 9:
-                        print(save_pd)
-                        print(real_time)
+                    # elif save_pd['now_times'] == 9:
+                        # print(save_pd)
+                        # print(real_time)
 
 
 def rec_consumer():
@@ -78,10 +80,10 @@ def rec_consumer():
         if not data:
             return
         try:
-            start_time = datetime.datetime.now()
+            # start_time = datetime.datetime.now()
             unpack_data(data, save_time_list)
             # print(data)
-            print(datetime.datetime.now() - start_time)
+            # print(datetime.datetime.now() - start_time)
             r = 'success'
         except:
             r = 'error'

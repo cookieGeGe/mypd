@@ -14,3 +14,10 @@ print(b)
 d = datetime.datetime(2018, 1, 1, 0, 0, 20)
 f = d-b
 print(f)
+
+a = pack('<20s', '255.255.255.255'.encode('utf-8'))
+print(a)
+
+a = 1
+
+print()

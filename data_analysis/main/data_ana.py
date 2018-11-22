@@ -17,13 +17,14 @@ def produce(c, mysocket):
 if __name__ == '__main__':
     mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    address = ('192.168.1.115', 8001)
-    r_c1 = rec_consumer()
-    r_c2 = rec_consumer()
-    mysocket.connect(address)
-    t1 = Recv(mysocket, r_c1)
-    t2 = Send(mysocket)
-    t2.start()
-    t1.start()
-    t1.join()
-    t2.join()
+    address_list = [('192.168.1.115', 8001), ]
+    r_c_dict = {}
+    for index, address in enumerate(address_list):
+        r_c_dict['r_c' + str(index+1)] = rec_consumer()
+        mysocket.connect(address)
+        t1 = Recv(mysocket, r_c_dict['r_c' + str(index+1)])
+        t2 = Send(mysocket)
+        t2.start()
+        t1.start()
+        t1.join()
+        t2.join()
