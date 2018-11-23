@@ -37,7 +37,7 @@ class Send(Thread):
                 while try_time <= 3:
                     try:
                         self._mysocket.sendall(ChangeBuffer)
-                        # print(ChangeBuffer)
+                        print(ChangeBuffer)
                         break
                     except:
                         try_time += 1
@@ -54,14 +54,22 @@ class Recv(Thread):
 
     def run(self):
         self._consumer.send(None)
-        # start_time = time.time()
-        # i = 0
+        start_time = time.time()
+        i = 0
         while True:
             data = self._mysocket.recv(3271)
-            if data:
+            print(data.__len__())
+            if data.__len__() < 3271:
+                if data[:4] == b'\xe0\xe9\xe0\xe9':
+                    wait_data = data
+                else:
+                    wait_data += data
+                    c = self._consumer.send(wait_data)
+            else:
                 c = self._consumer.send(data)
                 # print(current_thread().getName(), c)
-                # end_time = time.time()
-                # i += 1
-                # if end_time - start_time >= 10:
-                #     print(i / (end_time - start_time))
+                end_time = time.time()
+                i += 1
+                if end_time - start_time >= 10:
+                    # print(i / (end_time - start_time))
+                    pass
