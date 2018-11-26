@@ -64,8 +64,13 @@ class Recv(Thread):
                     wait_data = data
                 else:
                     wait_data += data
-                    c = self._consumer.send(wait_data)
+                    if wait_data.__len__() == 3271:
+                        c = self._consumer.send(wait_data)
             else:
+                if data[:4] != b'\xe0\xe9\xe0\xe9':
+                    new_data = wait_data + data
+                    data = new_data[:3271]
+                    wait_data = new_data[3271:]
                 c = self._consumer.send(data)
                 # print(current_thread().getName(), c)
                 end_time = time.time()
